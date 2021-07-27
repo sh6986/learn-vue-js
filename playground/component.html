@@ -10,6 +10,7 @@
     <div id="app">
         <app-header></app-header>
         <app-content></app-content>
+        <app-footer></app-footer>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -21,9 +22,17 @@
         Vue.component('app-content', {
             template: '<div>content</div>'
         });
+        // Vue.component('컴포넌트 이름', 컴포넌트 내용);
 
         new Vue({
-            el: '#app'
+            el: '#app',
+            // 지역 컴포넌트 등록 방식
+            components: {
+                // '컴포넌트 이름': '컴포넌트 내용',
+                'app-footer': {
+                    template: '<footer>footer</footer>'
+                }
+            }
         });
     </script>
 </body>
