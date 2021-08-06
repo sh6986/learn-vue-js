@@ -5,7 +5,7 @@ Vue.config.productionTip = false
 
 // var App = {
 //   template: '<div>app</div>'
-}
+// }
 
 new Vue({
   render: h => h(App),
