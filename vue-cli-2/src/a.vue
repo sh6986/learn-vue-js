@@ -1,12 +1,3 @@
-var appHeader = {
-    template: '<div>header</div>',
-    methods: {
-        addNum: function() {
-
-        }
-    } 
-};
-
 <template>
     <!-- HTML -->
   <div>header</div>
