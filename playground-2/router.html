@@ -34,8 +34,9 @@
                 {
                     // 페이지의 url 이름
                     path: '/login',
+                    // name: 'login', // 이름을 넣으면 더욱 의미있다.
                     // 해당 url 에서 표시될 컴포넌트
-                    component: LoginComponent
+                    component: LoginComponent   // 해당 페이지마다 뿌려질 컴포넌트는 하나이기 때문에 component
                 },
                 // 메인 페이지 정보
                 {
@@ -46,8 +47,9 @@
         });
 
         new Vue({
+            mode: 'history',    // url 뒤에 #(해시) 없애고 싶을때
             el: '#app',
-            router: router
+            router: router,
         });
     </script>
 </body>
