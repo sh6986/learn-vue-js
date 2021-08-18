@@ -8,7 +8,7 @@
       <div>
         <label for="password">pw:</label>
         <input type="password" id="password" v-model="password">
-      </div>
+      </div>  
       <button type="submit">login</button>
     </form>
   </div>
