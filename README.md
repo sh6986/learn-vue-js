@@ -86,3 +86,37 @@ new Vue({
 	watch: ,
 });
 ```
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d9facf0c-00aa-4cbf-9ea7-700597b938d4/Untitled.png)
+
+- 화면을 영역별로 구분해서 코드로 관리
+- 인스턴스를 생성하면 개발자 도구에서 Root 컴포넌트로 인식
+
+### 컴포넌트 등록
+
+- 전역 컴포넌트
+
+```java
+Vue.component('컴포넌트 이름', 컴포넌트 내용);
+```
+
+- 지역 컴포넌토
+
+```java
+new Vue({
+	el: '#app',
+	components: {
+		'컴포넌트 이름': 컴포넌트 내용
+	}
+});
+```
+
+++ 전역은 component 고 지역은 components (method 속성도 같다.)
+
+### 전역 컴포넌트와 지역 컴포넌트의 차이점
+
+- 지역컴포넌트는 하단에 어떤 컴포넌트가 등록되어있는지 알 수 있다.
+- 일반적으로는 지역컴포넌트 사용
+- 전역컴포넌트는 인스턴스를 생성하지 않아도 모든 인스턴스에 적용되어있다.
+지역컴포넌트는 인스턴스마다 새로 생성해줘야 한다.
+
+
