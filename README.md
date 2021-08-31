@@ -119,4 +119,83 @@ new Vue({
 - 전역컴포넌트는 인스턴스를 생성하지 않아도 모든 인스턴스에 적용되어있다.
 지역컴포넌트는 인스턴스마다 새로 생성해줘야 한다.
 
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c9b6d31f-7976-423e-b097-00c736f7cff4/Untitled.png)
 
+- 컴포넌트는 각각 고유한 유효 범위를 갖는다. (데이터를 각각 관리한다) 따라서 공유하기 위해 props속성, 이벤트 를 이용해야 한다.
+- 상위에서 하위로는 데이터를 내려줌, 프롭스 속성
+- 하위에서 상위로는 이벤트를 올려줌, 이벤트 발생
+
+## 컴포넌트 통신 규칙이 필요한 이유
+
+- 데이터의 흐름을 추적할 수 있다. 항상 데이터는 내려오고 아래서 위로는 이벤트가 올라가기 때문
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1fafc0fd-ad84-45b4-bf9d-ce571fd1f16f/Untitled.png)
+
+## props 속성
+
+### 사용방법
+
+```java
+<app-header v-bind:프롭스 속성 이름="상위 컴포넌트의 데이터 이름"></app-header>
+```
+
+- 상위에서 데이터를 바꾸면 하위에도 그대로 반영된다. → reactivity 가 props에도 그대로 반영
+
+## event emit
+
+- 하위컴포넌트에서 상위컴포넌트로 대화하는 방식
+
+### 사용방법
+
+```java
+var appHeader = {
+	template: '<button v-on:click="passEvent">click me</button>',
+	methods: {
+		passEvent: function() {
+			this.$emit('pass');
+		}
+	}
+}
+```
+
+## 뷰 인스턴스에서의 this
+
+```java
+var obj = {
+	num: 10,
+	getNumber: function() {
+		console.log(this.num);
+	}
+}
+```
+
+- 객체의 속성에서 다른 속성을 가리킬 때는 this를 사용하면 된다. this는 해당 object를 가리키게 된다.
+- Vue 인스턴스도 마찬가지
+
+```java
+new Vue = {
+	el: '',
+	data: {
+		num: 10,
+	},
+	methods: {
+		getNumber: function() {
+			this.num
+		}
+	},
+}
+```
+
+- 위와는 다르게 num을 data 안에 선언했음에도 this.num 을 잘 가져온다.
+실제로 뷰 내부의 동작에 의해 data 내의 num은 속성으로 data 밖으로 나오게 된다.
+(Vue 인스턴스를 변수에 넣고 직접 변수를 콘솔에 찍어보면 num이 속성으로 있는걸 볼 수 있다.)
+
+[JavaScript this](https://www.w3schools.com/js/js_this.asp)
+
+[Understanding the "this" Keyword in JavaScript](https://betterprogramming.pub/understanding-the-this-keyword-in-javascript-cb76d4c7c5e8)
+
+## 같은 컴포넌트 레벨 간의 통신 방법
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7813fe01-3c5f-49a3-87a7-b565ddc22d21/Untitled.png)
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c103ce4c-8390-4776-8929-4538fe156dad/Untitled.png)
