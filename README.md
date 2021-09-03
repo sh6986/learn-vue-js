@@ -322,3 +322,153 @@ new Vue({
 [프런트엔드 개발자가 알아야하는 HTTP 프로토콜 Part 1](https://joshua1988.github.io/web-development/http-part1/)
 
 [Chrome DevTools - Chrome Developers](https://developer.chrome.com/docs/devtools/)
+
+
+뷰로 화면을 조작하는 방법을 의미. 크게 데이터 바인딩과 디렉티브로 나뉜다.
+
+## 데이터 바인딩
+
+- 콧수염 괄호
+
+```java
+<div>{{ message }}</div>
+```
+
+## 디렉티브
+
+- v- 붙는것들
+
+```java
+<div>
+	Hello <span v-if-"show">Vue.js</span<
+</div>
+```
+
+## computed 속성
+
+- Vue 인스턴스의 data를 대상으로 data에 의존해서 결과값을 반환한다.
+화면에 doubleNum 을 표시할 때 data의 num에 *2를 해서 보여주므로 data 의 num에 의존하게 된다.
+
+```java
+new Vue({
+	el: '#app',
+	data: {
+		num: 10,
+	},
+	computed: {
+		doubleNum: function() {
+		return this.num * 2;
+		}
+	}
+});
+```
+
+- 요소에 클래스에도 접근 가능하다.
+
+```java
+<div id="app">
+	<p v-bind:class="errorTextColor">Hello</p>
+</div>
+
+new Vue({
+	el: '#app',
+	data: {
+		// cname: 'blue-text',
+		isError: false
+	},
+	computed: {
+		errorTextColor: function() {
+			return this.isError ? 'warning' : null;
+		}
+	}
+});
+```
+
+## v-bind
+
+- dom에 대한 정보에 접근해서 변경가능하다.
+- ex) 해당 요소에 id를 Vue 인스턴스의 data로 관리하고 싶을때
+
+    ```java
+    new Vue({
+    	el: '#app',
+    	data: {
+    		num: 10,
+    		uuid: 'abc1234'
+    	},
+    });
+    ```
+
+    ```java
+    <div id="app">
+    	<p v-bind:id="uuid">{{ num }}</p>
+      <!-- <p id="abc1234">{{ num }}</p> -->
+    </div>
+    ```
+
+- {}를 사용하면  data 값에 따라 class값을 설정할 수 있다.
+
+    ```java
+    <p v-bind:class="{ warning: isError }">Hello</p>
+
+    <script>
+    	new Vue({
+    		el: '#app',
+    		data: {
+    			// cname: 'blue-text',
+    			isError: false
+    		}
+    	});
+    </script>
+    ```
+
+## 이외 자주사용하는 디렉티브
+
+- v-if, v-else
+- v-show
+    - v-if 는 돔을 아예 제거하고 v-show는 css display를 none으로 설정
+- v-model (input 박스 등에 값을 연결)
+- v-on
+    - v-on:click, v-on:keyup 등 다양하다
+    ++ event modifier : v-on:keyup.enter 처럼 enter 시 이벤트 발생 가능하다. 종류 다양하므로 찾아보면 좋다.
+    - v-on:submit
+    form 태그 사용시 submit 이벤트시 Vue인스턴스에 따로 설정해놓은 methods를 연결할 수 있다. 
+    보통 form 으로 보낼시 새로고침 되는것을 막기위해 사용하고, 이때 해당 메소드에 event인자를 받아서 event.preventDefault()를 사용해서 폼의 이동, 새로고침을 막는다. →바닐라js, 제이쿼리 방식
+    뷰에서는 v-on:submit.prevent를 이용해 이벤트 기본 동작을 막는다.(event modifier)
+
+++ 모르는 문법이 나오면 공식 문서를 보고 해결하면 된다.
+
+[Form Input Bindings - Vue.js](https://vuejs.org/v2/guide/forms.html#ad)
+
+## watch 속성
+
+- vue 인스턴스 내 데이터를 대상으로 하고 데이터의 변화에 따라서 특정 로직을 실행할 수 있는 뷰의 속성
+
+```java
+new Vue({
+	el: '#app',
+	data: {
+		num: 10
+	},
+	watch: {
+		num: function(newValue, oldValue) {
+			this.logText();
+		}
+	},
+	methods: {
+		logText: function() {
+			console.log('changed');
+		}
+	}
+});
+```
+
+- num 이 변화할때마다 watch 안에 num 의 함수안에 정의한 코드가 실행된다.
+
+## watch 속성 vs computed 속성
+
+- coumputed - 단순한 값에 대한 계산. validation 뷰 라이브러리들이 대부분 computed로 만들어져 있다.
+- watch - 주로 무거운 로직. 매번 실행되기 부담스러운 로직. axios 요청 등
+- 공식문서에 왠만하면 computed 를 사용하는것이 좋고, watch 보다는 computed 가 대부분에 경우에 적합하다라고 나와있다.
+
+[Computed Properties and Watchers - Vue.js](https://vuejs.org/v2/guide/computed.html#ad)
